@@ -189,7 +189,7 @@ document.getElementById("balanceBtn").onclick = processReaction;
 
 // Enter / Space
 input.addEventListener("keydown", e => {
-  if (e.key === "Enter" || e.key === " ") {
+  if (e.key === "Alt" || e.key === " ") {
     e.preventDefault();
     processReaction();
   }
