@@ -1,63 +1,87 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Виртуальная Лаборатория</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Виртуальная лаборатория</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-<h1>Виртуальная Лаборатория</h1>
-<p>Добро пожаловать! Исследуйте химию через калькулятор массы, эксперименты и поиск реакций.</p>
-<img src="chemistry_image.png" alt="Химия" class="main-image">
-</header>
-<nav>
-<button id="massCalcBtn" class="nav-btn">Калькулятор массы</button>
-<button id="experimentsBtn" class="nav-btn">Анимация экспериментов</button>
-<button id="reactionBtn" class="nav-btn">Поиск реакций</button>
-</nav>
-<main>
-<section id="home" class="content-section active">
-<h2>Главная страница</h2>
-<p>Выберите один из разделов выше.</p>
-</section>
-<section id="massCalculator" class="content-section">
-<h2>Калькулятор молекулярной массы</h2>
-<input type="text" id="elementInput" placeholder="Введите формулу вещества (например Ca(OH)2)">
-<button onclick="calculateMass()">Рассчитать</button>
-<div id="massResult"></div>
-</section>
-<section id="experiments" class="content-section">
-<h2>Анимация экспериментов</h2>
-<div class="experiment-list">
-<button onclick="showExperiment(1)">Эксперимент 1</button>
-<button onclick="showExperiment(2)">Эксперимент 2</button>
-<button onclick="showExperiment(3)">Эксперимент 3</button>
-<button onclick="showExperiment(4)">Эксперимент 4</button>
-<button onclick="showExperiment(5)">Эксперимент 5</button>
-<button onclick="showExperiment(6)">Эксперимент 6</button>
-<button onclick="showExperiment(7)">Эксперимент 7</button>
-<button onclick="showExperiment(8)">Эксперимент 8</button>
-<button onclick="showExperiment(9)">Эксперимент 9</button>
-<button onclick="showExperiment(10)">Эксперимент 10</button>
+  <header>
+    <h1>Виртуальная лаборатория</h1>
+  </header>
 
-</div>
-<div id="experimentVideo">
-<h3 id="experimentTitle"></h3>
-<video controls id="videoPlayer"></video>
-<h4 id="reactionEquation"></h4>
-</div>
-</section>
-<section id="reactionFinder" class="content-section">
-<h2>Поиск и уравнивание реакций</h2>
-<input type="text" id="reactionInput" placeholder="Введите вещество или реакцию" oninput="searchReactions()">
-<ul id="reactionSuggestions"></ul>
-<button onclick="balanceReaction()">Уравнять реакцию</button>
-<div id="reactionResult"></div>
-</section>
-</main>
-<script src="script.js"></script>
+  <main>
+    <div class="icon-bar">
+      <div class="icon" id="home-icon">🏠 Главная</div>
+      <div class="icon" id="calc-icon">🧮 Калькулятор массы</div>
+      <div class="icon" id="exp-icon">🧪 Эксперименты</div>
+      <div class="icon" id="react-icon">⚡ Реакции</div>
+    </div>
+
+    <!-- Главная -->
+    <section id="home" class="page active">
+      <img src="chemistry_image.png" alt="Химия" class="main-img">
+      <p>Добро пожаловать в виртуальную лабораторию! 🚀</p>
+    </section>
+
+    <!-- Калькулятор -->
+    <section id="calculator" class="page">
+      <h2>Калькулятор молекулярной массы</h2>
+      <input type="text" id="formula" placeholder="Введите формулу (например, Ca(OH)2)">
+      <button onclick="calculateMass()">Рассчитать</button>
+      <p id="result"></p>
+    </section>
+
+    <!-- Эксперименты -->
+    <section id="experiments" class="page">
+      <h2>Эксперименты</h2>
+      <div class="exp-grid">
+        <div class="exp-card" onclick="showExperiment('Опыт 1','H2 + O2 → H2O','video1.mp4')">🔥 Опыт 1</div>
+        <div class="exp-card" onclick="showExperiment('Опыт 2','Cu + O2 → CuO','video2.mp4')">⚗️ Опыт 2</div>
+        <div class="exp-card" onclick="showExperiment('Опыт 3','Na + Cl2 → NaCl','video3.mp4')">💥 Опыт 3</div>
+        <!-- Добавь до 10 опытов -->
+      </div>
+      <div id="exp-viewer" class="hidden">
+        <h3 id="exp-title"></h3>
+        <video id="exp-video" controls></video>
+        <p id="exp-reaction"></p>
+      </div>
+    </section>
+
+    <!-- Реакции -->
+    <section id="reactions" class="page">
+      <h2>Поиск и уравнивание реакций</h2>
+      <input type="text" id="reaction-input" placeholder="Введите реакцию (например: H2 + O2 = H2O)">
+      <button onclick="balanceReaction()">Уравнять</button>
+      <p id="reaction-result"></p>
+    </section>
+  </main>
+
+  <script src="calculator.js"></script>
+  <script src="reactions.js"></script>
+  <script>
+    // переключение страниц
+    const pages = document.querySelectorAll('.page');
+    const icons = document.querySelectorAll('.icon');
+    function showPage(id) {
+      pages.forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      icons.forEach(i => i.classList.remove('active'));
+      document.getElementById(id.split('-')[0] + '-icon').classList.add('active');
+    }
+    document.getElementById("home-icon").onclick = () => showPage("home");
+    document.getElementById("calc-icon").onclick = () => showPage("calculator");
+    document.getElementById("exp-icon").onclick = () => showPage("experiments");
+    document.getElementById("react-icon").onclick = () => showPage("reactions");
+
+    // для экспериментов
+    function showExperiment(title, reaction, video) {
+      document.getElementById("exp-title").textContent = title;
+      document.getElementById("exp-reaction").textContent = reaction;
+      const vid = document.getElementById("exp-video");
+      vid.src = video;
+      document.getElementById("exp-viewer").classList.remove("hidden");
+    }
+  </script>
 </body>
 </html>
