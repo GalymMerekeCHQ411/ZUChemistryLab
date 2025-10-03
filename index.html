@@ -2,70 +2,71 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Виртуальная Лаборатория</title>
+  <title>Виртуальная лаборатория</title>
   <link rel="stylesheet" href="style.css">
+  <script src="calculator.js" defer></script>
+  <script src="reactions.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>Виртуальная Лаборатория</h1>
-    <nav>
-      <button onclick="showSection('home')">🏠 Главная</button>
-      <button onclick="showSection('calculator')">🧮 Калькулятор</button>
-      <button onclick="showSection('reactions')">⚗️ Реакции</button>
-      <button onclick="showSection('experiments')">🧪 Эксперименты</button>
-    </nav>
+    <h1>🔬 Виртуальная лаборатория</h1>
   </header>
 
   <main>
-    <section id="home" class="active">
+    <div class="icon-grid">
+      <div class="icon" id="calcIcon">⚖️ Калькулятор массы</div>
+      <div class="icon" id="expIcon">🧪 Эксперименты</div>
+      <div class="icon" id="reactIcon">⚡ Реакции</div>
+    </div>
+
+    <!-- Главный экран -->
+    <section id="homeSection" class="section active">
+      <img src="chemistry_image.png" alt="Химия" class="chem-img">
       <h2>Добро пожаловать!</h2>
-      <p>Здесь вы можете проводить виртуальные эксперименты, считать молекулярные массы и искать реакции.</p>
-      <img src="chemistry_image.png" alt="Химия" class="main-img">
+      <p>Выберите раздел для работы.</p>
     </section>
 
-    <section id="calculator">
+    <!-- Калькулятор -->
+    <section id="calcSection" class="section">
       <h2>Калькулятор молекулярной массы</h2>
-      <input type="text" id="formulaInput" placeholder="Например: Ca(OH)2">
-      <button onclick="calculateMass()">Рассчитать</button>
-      <p id="massResult"></p>
+      <input type="text" id="formulaInput" placeholder="Введите формулу (например: Ca(OH)2)">
+      <button id="calcBtn">Рассчитать</button>
+      <p id="calcResult"></p>
     </section>
 
-    <section id="reactions">
-      <h2>Поиск реакций</h2>
-      <input type="text" id="reactionInput" placeholder="Введите реагенты">
-      <button onclick="findReaction()">Найти реакцию</button>
+    <!-- Эксперименты -->
+    <section id="expSection" class="section">
+      <h2>Эксперименты</h2>
+      <div id="expList"></div>
+      <div id="expVideo"></div>
+    </section>
+
+    <!-- Реакции -->
+    <section id="reactSection" class="section">
+      <h2>Реакции</h2>
+      <input type="text" id="reactionInput" placeholder="Например: H2 + O2">
+      <div id="reactionSuggestions"></div>
+      <button id="balanceBtn">Уравнять</button>
       <p id="reactionResult"></p>
-    </section>
-
-    <section id="experiments">
-      <h2>Химические эксперименты</h2>
-      <div class="experiments-grid">
-        <div class="experiment" onclick="showExperiment(1)">Эксперимент 1</div>
-        <div class="experiment" onclick="showExperiment(2)">Эксперимент 2</div>
-        <div class="experiment" onclick="showExperiment(3)">Эксперимент 3</div>
-        <div class="experiment" onclick="showExperiment(4)">Эксперимент 4</div>
-        <div class="experiment" onclick="showExperiment(5)">Эксперимент 5</div>
-        <div class="experiment" onclick="showExperiment(6)">Эксперимент 6</div>
-        <div class="experiment" onclick="showExperiment(7)">Эксперимент 7</div>
-        <div class="experiment" onclick="showExperiment(8)">Эксперимент 8</div>
-        <div class="experiment" onclick="showExperiment(9)">Эксперимент 9</div>
-        <div class="experiment" onclick="showExperiment(10)">Эксперимент 10</div>
-      </div>
-      <div id="experimentVideo"></div>
     </section>
   </main>
 
-  <script src="calculator.js"></script>
-  <script src="reactions.js"></script>
   <script>
-    function showSection(id) {
-      document.querySelectorAll("main section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
+    // переключение секций
+    const sections = {
+      home: document.getElementById("homeSection"),
+      calc: document.getElementById("calcSection"),
+      exp: document.getElementById("expSection"),
+      react: document.getElementById("reactSection"),
+    };
 
-    function showExperiment(num) {
-      document.getElementById("experimentVideo").innerHTML = 
-        "<h3>Эксперимент " + num + "</h3><video controls width='400'><source src='experiment" + num + ".mp4' type='video/mp4'></video><p>Здесь будет уравнение реакции.</p>";
+    document.getElementById("calcIcon").onclick = () => showSection("calc");
+    document.getElementById("expIcon").onclick = () => showSection("exp");
+    document.getElementById("reactIcon").onclick = () => showSection("react");
+
+    function showSection(sec) {
+      Object.values(sections).forEach(s => s.classList.remove("active"));
+      sections[sec].classList.add("active");
     }
   </script>
 </body>
