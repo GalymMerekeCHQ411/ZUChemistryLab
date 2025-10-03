@@ -186,11 +186,3 @@ function processReaction() {
 
 // кнопка
 document.getElementById("balanceBtn").onclick = processReaction;
-
-// Enter / Space
-input.addEventListener("keydown", e => {
-  if (e.key === "Alt" || e.key === " ") {
-    e.preventDefault();
-    processReaction();
-  }
-});
