@@ -46,6 +46,8 @@ const reactionDatabase = [
   { reactants: ["Al", "HCl"], products: ["AlCl3", "H2"] },
   { reactants: ["Mg", "H2SO4"], products: ["MgSO4", "H2"] }
 ];
+
+
 function findReaction() {
   const input = document.getElementById("reactionInput").value.trim();
   const reagents = input.split("+").map(s => s.trim());
@@ -68,9 +70,10 @@ function findReaction() {
   }
 }
 
-// Обработка только Enter
+// Теперь реагируем только на Enter
 document.getElementById("reactionInput").addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
+    e.preventDefault(); // чтобы не добавлялся перенос строки
     findReaction();
   }
 });
