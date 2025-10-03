@@ -46,8 +46,6 @@ const reactionDatabase = [
   { reactants: ["Al", "HCl"], products: ["AlCl3", "H2"] },
   { reactants: ["Mg", "H2SO4"], products: ["MgSO4", "H2"] }
 ];
-
-
 function findReaction() {
   const input = document.getElementById("reactionInput").value.trim();
   const reagents = input.split("+").map(s => s.trim());
