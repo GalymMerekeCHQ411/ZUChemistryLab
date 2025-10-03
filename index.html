@@ -4,70 +4,73 @@
   <meta charset="UTF-8">
   <title>Виртуальная лаборатория</title>
   <link rel="stylesheet" href="style.css">
-  <script src="calculator.js" defer></script>
-  <script src="reactions.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>🔬 Виртуальная лаборатория</h1>
+    <h1>Виртуальная лаборатория</h1>
+    <p>Изучи химию онлайн: калькулятор, эксперименты, реакции</p>
   </header>
 
-  <main>
-    <div class="icon-grid">
-      <div class="icon" id="calcIcon">⚖️ Калькулятор массы</div>
-      <div class="icon" id="expIcon">🧪 Эксперименты</div>
-      <div class="icon" id="reactIcon">⚡ Реакции</div>
+  <nav>
+    <div class="nav-item" onclick="showSection('homeSection')">🏠 Главная</div>
+    <div class="nav-item" onclick="showSection('calculatorSection')">🧮 Калькулятор</div>
+    <div class="nav-item" onclick="showSection('experimentsSection')">⚗️ Эксперименты</div>
+    <div class="nav-item" onclick="showSection('reactionsSection')">🔬 Реакции</div>
+  </nav>
+
+  <!-- Главная -->
+  <section id="homeSection" class="section">
+    <h2>Добро пожаловать!</h2>
+    <img src="chemistry_image.png" alt="Химия" class="chemistry-img">
+    <p>Выберите раздел, чтобы начать.</p>
+  </section>
+
+  <!-- Калькулятор -->
+  <section id="calculatorSection" class="section" style="display:none;">
+    <h2>Калькулятор молекулярной массы</h2>
+    <input type="text" id="formulaInput" placeholder="Введите формулу, например: Ca(OH)2">
+    <button onclick="calculateMolarMass()">Рассчитать</button>
+    <p id="massResult"></p>
+  </section>
+
+  <!-- Эксперименты -->
+  <section id="experimentsSection" class="section" style="display:none;">
+    <h2>Эксперименты</h2>
+    <div class="experiments-grid">
+      <div class="experiment-card" onclick="openExperiment(1)"><p>Эксперимент 1</p></div>
+      <div class="experiment-card" onclick="openExperiment(2)"><p>Эксперимент 2</p></div>
+      <div class="experiment-card" onclick="openExperiment(3)"><p>Эксперимент 3</p></div>
+      <div class="experiment-card" onclick="openExperiment(4)"><p>Эксперимент 4</p></div>
+      <div class="experiment-card" onclick="openExperiment(5)"><p>Эксперимент 5</p></div>
+      <div class="experiment-card" onclick="openExperiment(6)"><p>Эксперимент 6</p></div>
+      <div class="experiment-card" onclick="openExperiment(7)"><p>Эксперимент 7</p></div>
+      <div class="experiment-card" onclick="openExperiment(8)"><p>Эксперимент 8</p></div>
+      <div class="experiment-card" onclick="openExperiment(9)"><p>Эксперимент 9</p></div>
+      <div class="experiment-card" onclick="openExperiment(10)"><p>Эксперимент 10</p></div>
     </div>
 
-    <!-- Главный экран -->
-    <section id="homeSection" class="section active">
-      <img src="chemistry_image.png" alt="Химия" class="chem-img">
-      <h2>Добро пожаловать!</h2>
-      <p>Выберите раздел для работы.</p>
-    </section>
+    <div id="experimentModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeExperiment()">&times;</span>
+        <h3 id="experimentTitle">Название эксперимента</h3>
+        <video id="experimentVideo" width="100%" controls>
+          <source id="experimentSource" src="" type="video/mp4">
+        </video>
+        <p id="experimentReaction">Уравнение реакции</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Калькулятор -->
-    <section id="calcSection" class="section">
-      <h2>Калькулятор молекулярной массы</h2>
-      <input type="text" id="formulaInput" placeholder="Введите формулу (например: Ca(OH)2)">
-      <button id="calcBtn">Рассчитать</button>
-      <p id="calcResult"></p>
-    </section>
+  <!-- Реакции -->
+  <section id="reactionsSection" class="section" style="display:none;">
+    <h2>Поиск реакций</h2>
+    <input type="text" id="reactionInput" placeholder="Введите реагенты через +">
+    <p id="reactionResult"></p>
+    <ul id="suggestions"></ul>
+  </section>
 
-    <!-- Эксперименты -->
-    <section id="expSection" class="section">
-      <h2>Эксперименты</h2>
-      <div id="expList"></div>
-      <div id="expVideo"></div>
-    </section>
-
-    <!-- Реакции -->
-    <section id="reactSection" class="section">
-      <h2>Реакции</h2>
-      <input type="text" id="reactionInput" placeholder="Например: H2 + O2">
-      <div id="reactionSuggestions"></div>
-      <button id="balanceBtn">Уравнять</button>
-      <p id="reactionResult"></p>
-    </section>
-  </main>
-
-  <script>
-    // переключение секций
-    const sections = {
-      home: document.getElementById("homeSection"),
-      calc: document.getElementById("calcSection"),
-      exp: document.getElementById("expSection"),
-      react: document.getElementById("reactSection"),
-    };
-
-    document.getElementById("calcIcon").onclick = () => showSection("calc");
-    document.getElementById("expIcon").onclick = () => showSection("exp");
-    document.getElementById("reactIcon").onclick = () => showSection("react");
-
-    function showSection(sec) {
-      Object.values(sections).forEach(s => s.classList.remove("active"));
-      sections[sec].classList.add("active");
-    }
-  </script>
+  <script src="script.js"></script>
+  <script src="calculator.js"></script>
+  <script src="reactions.js"></script>
 </body>
 </html>
